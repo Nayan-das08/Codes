@@ -1,0 +1,32 @@
+require "options"
+
+
+--[[:set number
+:set autoindent
+:set tabstop=4
+:set shiftwidth=4
+:set smarttab
+:set softtabstop=4
+:set mouse=a
+
+call plug#begin()
+
+Plug 'https://github.com/vim-airline/vim-airline'
+Plug 'https://github.com/preservim/nerdtree'
+Plug 'https://github.com/rafi/awesome-vim-colorschemes'
+Plug 'https://github.com/neoclide/coc.nvim'
+"Plug 'https://github.com/glepnir/dashboard-nvim'
+Plug 'https://github.com/jiangmiao/auto-pairs'
+Plug 'https://github.com/mhinz/vim-startify'
+
+call plug#end()
+
+nnoremap <C-e> :NERDTreeToggle<CR>
+nnoremap <C-w> :wq<CR>
+nnoremap <C-q> :q!<CR>
+nnoremap <C-z> :u<CR>
+
+let g:NERDTreeDirArrowExpandable="+"
+let g:NERDTreeDirArrowCollapsible="~"
+
+:colorscheme OceanicNext]]

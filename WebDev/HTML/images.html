@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Images</title>
+  <link>
+</head>
+
+<body>
+  <h1>Images</h1>
+  <p>
+    We can insert images in webpage like this:
+    <img src="sample images/01img.jpg" style="width: 250px; height: 100px;">
+    or
+    <img src="sample images/02img.jpg" width="100" height="100">
+  </p>
+
+  <p><b>Note: The image tag is an inline tag.</b></p>
+  <br>
+
+  <p>For the above images, both the width and the heigt were mentioned.
+    But to change the size of the image while maintaining the proportion,
+    you can mention any one of the constraints and the other dimension
+    will be adjusted automatically. Also, you can use figure tag to specify
+    a picture (It make sense to use figure tag when there is text in the page
+    and there are images to complement the text material).
+  </p>
+
+  <figure>
+    <img src="sample images/05img.jpg" alt="wallpaper 3" width="500">
+    <figcaption>you can put caption using figcaption tag</figcaption>
+  </figure>
+  <br>
+
+  <p>We can also use percentages for width and
+    height parameters, like this:</p>
+
+  <figure>
+    <img src="sample images/04img.jpg" alt="" width="70%">
+    <figcaption>Width by percentage</figcaption>
+  </figure>
+  <p>
+    On changing the size of the browser window we notice that the image
+    size was given by percentage changes.
+  </p>
+  <br>
+
+  <p>
+    You can also use images stored on external servers as well (i.e. on Internet).
+  </p>
+
+  <figure>
+    <a href="https://wonderfulengineering.com/40-amazing-landscape-wallpapers-full-hd-1920-x-1080-px/" target="_blank">
+      <img src="https://wonderfulengineering.com/wp-content/uploads/2014/07/Landscape-wallpapers-15.jpg" alt=""
+        width="80%">
+    </a>
+    <figcaption>Click on the image to visit the site</figcaption>
+  </figure>
+  <br>
+
+  <p>You can also put links on the image with relative URLs as well.</p>
+
+  <figure>
+    <a href="sample images/06img.jpg">
+      <img src="sample images/06img.jpg" alt="" width="100%">
+    </a>
+    <figcaption>Click on the image to view it in fullscreen</figcaption>
+  </figure>
+</body>
+
+</html>
