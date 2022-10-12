@@ -1,0 +1,4 @@
+This file is named 'new2.txt'. 
+
+This file is created using FileOutputStream class 
+and we have entered String data into it.
