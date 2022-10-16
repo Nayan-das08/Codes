@@ -49,20 +49,29 @@ int get_max_deadline(struct task tasks[])
 	return max;
 }
 
-void put(int schedule[], int d)
-{
-	if (schedule[d])
-}
+// void put(int scheduled[], int d)
+// {
+// 	if (scheduled[d])
+// }
 
 int main()
 {
-	struct task tasks[] = {
-		{1,2,100},
-		{2,1,10},
-		{3,2,15},
-		{4,1,27}
-	};
+	// struct task tasks[] = {
+	// 	{1,2,100},
+	// 	{2,1,10},
+	// 	{3,2,15},
+	// 	{4,2,27}
+	// };
 
+	struct task tasks[] = {
+		{1,  4,  70},
+		{2,  2,  60},
+		{3,  5,  50},
+		{4,  3,  40},
+		{5,  1,  30},
+		{6,  4,  20},
+		{7,  6,  10}
+	};
 	n = sizeof(tasks)/sizeof(struct task);
 
 	quick(tasks,0,n-1);
@@ -72,20 +81,67 @@ int main()
 		printf("%2d\t  %2d\t\t  %2d\n", tasks[i].id, tasks[i].d, tasks[i].p);
 
 	int m = get_max_deadline(tasks);
-	// struct task *schedule = (struct task *) calloc(m*sizeof(struct task));
-	int *schedule = (int *) calloc(m,sizeof(int));
-	int d;
+	struct task *scheduled = (struct task *) calloc(m,sizeof(struct task));
+	struct task *not_scheduled = (struct task *) calloc(n-m,sizeof(struct task));
+	int d, flag;
 
-	for (int i=0; i<2; i++)
+	printf("\n");
+	int k=0;
+	for (int i=0; i<n; i++)
 	{
+		// printf("task %d\n", tasks[i].id);
 		d = tasks[i].d;
-		put(schedule, d);
-		if (schedule[temp_d-1] == 0)
-			schedule[temp_d-1] = tasks[i].id;
+		flag=0;
+		for (int j=d; j>=0; j--)
+		{
+			if (scheduled[j-1].id == 0)
+			{
+				scheduled[j-1] = tasks[i];
+				flag=1;
+				break;
+			}
+			// printf("  %d not available\n", j);
+		}
+		if (flag == 0)
+			not_scheduled[k++] = tasks[i];
 	}
 
-	printf("\n\nscheduled : ");
+	// printf("\nscheduledd : ");
+	
+	printf("\n\n");
 	for (int i=0; i<m; i++)
-		printf("%d  ", schedule[i]);
+		printf("+-----");
+	printf("+\n");
+
+	for (int i=0; i<m; i++)
+		printf("|  %d  ", scheduled[i].id);
+	printf("|\n");
+
+	for (int i=0; i<m; i++)
+		printf("+-----");
+	printf("+\n");
+
+	for (int i=0; i<=m; i++)
+		printf("%d     ", i);
+	
+/*	int profit = 0;
+	int p;
+	printf("\n\n");
+	for (int i=0; i<m; i++)
+	{
+		printf("%d  ", scheduled[i].p);
+		profit += scheduled[i].p;
+	}
+	printf("\nProfit = %d", profit);
+*/	
+	int penalty = 0;
+	printf("\n\nnot scheduled : ");
+	for (int i=0; i<(n-m); i++)
+	{
+		printf("%d  ", not_scheduled[i].id);
+		penalty += not_scheduled[i].p;
+	}
+
+	printf("\nPenalty = %d", penalty);
 	return 0;
 }
