@@ -49,24 +49,29 @@ int get_max_deadline(struct task tasks[])
 	return max;
 }
 
-// void put(int scheduled[], int d)
-// {
-// 	if (scheduled[d])
-// }
-
 int main()
 {
-	struct task tasks[] = {
-		{1,  1,  3},
-		{2,  3,  5},
-		{3,  4,  20},
-		{4,  3,  18},
-		{5,  2,  1},
-		{6,  1,  6},
-		{7,  2,  30}
+	// struct task tasks[] = {
+	// {1,  4,  70},
+	// {2,  2,  60},
+	// {3,  5,  50},
+	// {4,  3,  40},
+	// {5,  1,  30},
+	// {6,  4,  20},
+	// {7,  6,  10}
+	// };
+	// n = sizeof(tasks)/sizeof(struct task);
 
-	};
-	n = sizeof(tasks)/sizeof(struct task);
+	printf("Enter number of tasks : ");
+	scanf("%d", &n);
+	struct task *tasks = (struct task *) calloc(n,sizeof(struct task));
+
+	for (int i=0; i<n; i++)
+	{
+		tasks[i].id = i+1;
+		tasks[i].d 	= rand()%(n-(rand()%2));
+		tasks[i].p  = (rand()%10)*10;
+	}
 
 	quick(tasks,0,n-1);
 
