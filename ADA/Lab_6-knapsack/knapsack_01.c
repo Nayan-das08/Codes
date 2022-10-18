@@ -48,7 +48,7 @@ int main()
 
 	printf("\t  W    V\n");
 	printf("------------------\n");
-	for (int i=1; i<=n; i++)
+	for (int i=1; i<n; i++)
 	{
 		printf("item_%d    %d    %d\n", i, w[i], v[i]);
 	}
