@@ -68,14 +68,18 @@ int main()
 
 	for (int i=0; i<n; i++)
 	{
+		printf("\nTask %d:\n", i+1);
 		tasks[i].id = i+1;
-		tasks[i].d 	= rand()%(n-(rand()%2));
-		tasks[i].p  = (rand()%10)*10;
+		printf("  deadline : ");
+		scanf("%d", &tasks[i].d);
+		printf("  penalty  : ");
+		scanf("%d", &tasks[i].p);
 	}
+	// printf("")
 
 	quick(tasks,0,n-1);
 
-	printf("ID\tDeadline\tProfit\n");
+	printf("\n\nID\tDeadline\tProfit\n");
 	for (int i=0; i<n; i++)
 		printf("%2d\t  %2d\t\t  %2d\n", tasks[i].id, tasks[i].d, tasks[i].p);
 
@@ -88,10 +92,9 @@ int main()
 	int k=0;
 	for (int i=0; i<n; i++)
 	{
-		// printf("task %d\n", tasks[i].id);
 		d = tasks[i].d;
 		flag=0;
-		for (int j=d; j>=0; j--)
+		for (int j=d; (j-1)>=0; j--)
 		{
 			if (scheduled[j-1].id == 0)
 			{
@@ -99,15 +102,15 @@ int main()
 				flag=1;
 				break;
 			}
-			// printf("  %d not available\n", j);
 		}
 		if (flag == 0)
+		{
 			not_scheduled[k++] = tasks[i];
+		}
 	}
 
-	// printf("\nscheduledd : ");
+	printf("\nscheduled : \n");
 	
-	printf("\n\n");
 	for (int i=0; i<m; i++)
 		printf("+-----");
 	printf("+\n");
@@ -132,15 +135,15 @@ int main()
 		penalty += not_scheduled[i].p;
 	}
 
-	printf("\nPenalty = %d", penalty);
-
 	int profit = 0;
 	for (int i=0; i<m; i++)
 	{
-		// printf("%d  ", scheduled[i].p);
 		profit += scheduled[i].p;
 	}
-	printf("\n\nProfit = %d", profit);
+
+	printf("\n\nPenalty = %d", penalty);
+	// printf("\n\nProfit = %d", profit);
+
 	return 0;
 }
 
@@ -156,3 +159,22 @@ int main()
 // 	{2,1,10},
 // 	{3,2,15},
 // 	{4,2,27}
+
+
+/*
+7
+4  
+70
+2  
+60
+5  
+50
+3  
+40
+1  
+30
+4  
+20
+6  
+10
+*/
