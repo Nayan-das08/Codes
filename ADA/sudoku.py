@@ -1,4 +1,6 @@
 # sudoku
+import time
+from os import system
 
 def show(game):
 	print()
@@ -15,6 +17,15 @@ def show(game):
 		print()
 	print()
 
+def edit(game):
+	for i in range(9):
+		game[0][i] = i+1
+		show(game)
+		time.sleep(0.2)
+		system('cls')
+
+# ----------------------------------------
+
 game = [
 	[0,3,0, 1,0,0, 4,9,6],
 	[0,0,5, 0,9,6, 2,1,0],
@@ -30,3 +41,4 @@ game = [
 ]
 
 show(game)
+# edit(game)
