@@ -30,6 +30,7 @@ def algo(W, nodes, colors, status, tab=0):
 		for v in adj:
 			adj_color = status[1][v]
 			print(f'{space}{v} has color {adj_color}')
+			status[1][v] = 
 			# print(f'{space}remaining nodes: {nodes}')
 			if adj_color == -1:
 				algo(W, nodes_copy, colors, status, tab+1)
