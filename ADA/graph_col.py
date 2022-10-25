@@ -1,5 +1,17 @@
-import networkx as nx
-import matplotlib.pyplot as plt
+# done till 1,0 -> 2,1 -> 3,2 -> 4,0
+# need to save the progress (ie. the color chosen)
+# also need to manage the variable status
+	# the arg needs to be sent to next recursion as a copy
+	# the value isn't changing
+	# same problem as nodes variable
+
+def print_status(status, space=''):
+	print(f'{space}status: ')
+	for i in range(len(status)):
+		print(f'{space}  [', end='')
+		for j in range(1,len(status[1])):
+			print(f'{status[i][j]:2}, ', end='')
+		print(']')
 
 def color_em(nodes, edges, W, n_colors):
 	colors = list(range(n_colors))
@@ -7,7 +19,7 @@ def color_em(nodes, edges, W, n_colors):
 	[status[0].append(x) for x in nodes]
 	[status[1].append(-1) for x in range(len(nodes))]
 	print(f'\ncolors: {colors}')
-	print(f'status: \n    {status[0]}\n    {status[1]}')
+	print_status(status)
 	print('\n--------------------')
 	algo(W, nodes, colors, status)
 
@@ -16,7 +28,7 @@ def algo(W, nodes, colors, status, tab=0):
 	if len(nodes) == 0:
 		return
 	else:
-		print()
+		# print()
 		nodes_copy = [i for i in nodes]
 		current_node = nodes_copy.pop(0)
 		branches = [(current_node,i) for i in colors]
@@ -24,19 +36,19 @@ def algo(W, nodes, colors, status, tab=0):
 		row = W[current_node][1:]
 		adj = [i+1 for i,x in enumerate(row) if x > 0]
 
-		print(f'{space}{current_node} -> {branches}')
-		print(f'{space}adjacent to {current_node} = {adj}')
-
-		for v in adj:
-			adj_color = status[1][v]
-			print(f'{space}{v} has color {adj_color}')
-			status[1][v] = 
-			# print(f'{space}remaining nodes: {nodes}')
-			if adj_color == -1:
+		for c in colors:
+			print(f'\n{space}({current_node},{c}),    adj: {adj}')
+			print_status(status, space)
+			flag = 1
+			for v in adj:
+				print(f'{space}{v} (adj) has color {status[1][v]}')
+				if status[1][v] == c:
+					flag = 0
+					print(f"{space}won't work")
+					break
+			if flag == 1:
+				status[1][current_node] = c
 				algo(W, nodes_copy, colors, status, tab+1)
-
-
-	# print(nodes)
 
 
 # ----------------------------------
