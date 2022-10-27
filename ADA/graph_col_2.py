@@ -1,11 +1,12 @@
-from colorama import Fore, Back, Style
-from sys import argv
-import networkx as nx
-import matplotlib.pyplot as plt
-from os import system
+# from 	colorama 	import Fore, Back, Style
+from 	sys 		import argv
+import 	networkx 	as nx
+import 	matplotlib.pyplot as plt
+from 	os 			import system
+import 	pandas 		as pd
 
 solution = []
-color_set = [Fore.RED, Fore.GREEN, Fore.YELLOW, Fore.BLUE, Fore.MAGENTA, Fore.CYAN]
+# color_set = [Fore.RED, Fore.GREEN, Fore.YELLOW, Fore.BLUE, Fore.MAGENTA, Fore.CYAN]
 
 def print_status(status, space=''):
 	print(f'{space}status: ')
@@ -69,8 +70,10 @@ lst = []
 flag = 0
 chromatic = 0
 
-if n_colors > 6:
-	color_set = list(range(n_colors))
+color_set = list(range(n_colors))
+
+# if n_colors > 6:
+# 	color_set = list(range(n_colors))
 
 # get edges
 for i in range(1,len(W)):
@@ -101,9 +104,12 @@ for i in range(1,n_colors+1):
 
 print(f'\nChromatic number of the graph : {chromatic}')
 
-# display the graph
-graph = nx.Graph()
-graph.add_edges_from(edges)
-nx.draw_networkx(graph)
-# plt.show()
 
+# display the graph
+g = nx.Graph()
+
+g.add_nodes_from(nodes)
+g.add_edges_from(edges)
+
+nx.draw(g, with_labels=True, node_color=pd.Series(solution[0][1:]), cmap=plt.cm.Set1, node_size=750)
+plt.show()

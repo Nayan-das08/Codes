@@ -7,53 +7,14 @@
 
 # -----------------------------------
 
-# import copy
+import pandas as pd
 
-# def show(a,b):
-# 	print(f'a: {a}')
-# 	print(f'b: {b}\n')
+df = pd.DataFrame({ 'ID':['A', 'B', 'C','D','E'], 'myvalue':['group1','group1','group2','group3','group3'] })
+print(df)
+df['myvalue']=pd.Categorical(df['myvalue'])
+print()
+# print(pd.Categorical(df['myvalue']))
+print(df['myvalue'].cat.codes)
 
-# a = [
-# 	[1,2,3],
-# 	[4,5,6]
-# ]
-# # b = [i for i in a]
-# # b = a.copy()
-# b = []
-# for row in a:
-# 	b.append([i for i in row])
-
-# show(a,b)
-
-# for i in range(len(a)):
-# 	for j in range(len(a[0])):
-# 		a[i][j] *= 2
-
-# show(a,b)
-
-# -----------------------------------
-
-# a = []
-
-# for i in range(3):
-# 	row = []
-# 	for j in range(2):
-# 		row.append(0)
-# 	a.append(row)
-
-# print(a)
-
-# -----------------------------------
-
-n = int(input("number of nodes : "))
-
-a = []
-
-print('\nEnter the matrix : ')
-for i in range(n+1):
-	row_s = input()
-	row = [int(i) for i in row_s.split()]
-	a.append(row)
-
-for i in a:
-	print(i)
+a = [i for i in range(10)]
+print(pd.Series(a))
