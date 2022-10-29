@@ -1,9 +1,10 @@
-# from 	colorama 	import Fore, Back, Style
+from 	colorama 	import Fore, Style
 from 	sys 		import argv
 import 	networkx 	as nx
 import 	matplotlib.pyplot as plt
 from 	os 			import system
 import 	pandas 		as pd
+import 	matplotlib 	as mpl
 
 solution = []
 # color_set = [Fore.RED, Fore.GREEN, Fore.YELLOW, Fore.BLUE, Fore.MAGENTA, Fore.CYAN]
@@ -24,7 +25,7 @@ def color_em(nodes, edges, W, n_colors):
 	algo(W, nodes, colors, status)
 
 def algo(W, nodes, colors, status, tab=0):
-	space = ' '*(tab*4)
+	# space = ' '*(tab*4)
 	status_copy = [i for i in status]
 	if len(nodes) == 0:
 		solution.append(status_copy)
@@ -32,7 +33,7 @@ def algo(W, nodes, colors, status, tab=0):
 	else:
 		nodes_copy = [i for i in nodes]
 		current_node = nodes_copy.pop(0)
-		branches = [(current_node,i) for i in colors]
+		# branches = [(current_node,i) for i in colors]
 
 		row = W[current_node][1:]
 		adj = [i+1 for i,x in enumerate(row) if x > 0]
@@ -111,5 +112,18 @@ g = nx.Graph()
 g.add_nodes_from(nodes)
 g.add_edges_from(edges)
 
-nx.draw(g, with_labels=True, node_color=pd.Series(solution[0][1:]), cmap=plt.cm.Set1, node_size=750)
+cmaps = mpl.colormaps()
+c_n = int(argv[2])
+# nx.draw(g, with_labels=True, node_color=pd.Series(solution[0][1:]), cmap=plt.cm.Set1, node_size=750)
+# nx.draw(g, with_labels=True, node_color=pd.Series(solution[0][1:]), cmap=mpl.colormaps['Set1'], node_size=750)
+nx.draw(g, with_labels=True, node_color=pd.Series(solution[0][1:]), cmap=cmaps[c_n], node_size=750)
 plt.show()
+
+
+# 5
+# 0 1 2 3 4 5
+# 1 0 1 1 1 1
+# 2 1 0 1 1 1
+# 3 1 1 0 1 1
+# 4 1 1 1 0 1
+# 5 1 1 1 1 0
