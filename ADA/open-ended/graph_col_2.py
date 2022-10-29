@@ -1,10 +1,10 @@
 from 	colorama 	import Fore, Style
 from 	sys 		import argv
 import 	networkx 	as nx
+import 	matplotlib 	as mpl
 import 	matplotlib.pyplot as plt
 from 	os 			import system
 import 	pandas 		as pd
-import 	matplotlib 	as mpl
 
 solution = []
 # color_set = [Fore.RED, Fore.GREEN, Fore.YELLOW, Fore.BLUE, Fore.MAGENTA, Fore.CYAN]
@@ -18,14 +18,13 @@ def print_status(status, space=''):
 	print(']')
 	print(Style.RESET_ALL, end='')
 
-def color_em(nodes, edges, W, n_colors):
+def color_em(nodes, W, n_colors):
 	colors = list(range(n_colors))
 	status = [0]
 	[status.append(-1) for x in range(len(nodes))]
 	algo(W, nodes, colors, status)
 
-def algo(W, nodes, colors, status, tab=0):
-	# space = ' '*(tab*4)
+def algo(W, nodes, colors, status):
 	status_copy = [i for i in status]
 	if len(nodes) == 0:
 		solution.append(status_copy)
@@ -33,7 +32,6 @@ def algo(W, nodes, colors, status, tab=0):
 	else:
 		nodes_copy = [i for i in nodes]
 		current_node = nodes_copy.pop(0)
-		# branches = [(current_node,i) for i in colors]
 
 		row = W[current_node][1:]
 		adj = [i+1 for i,x in enumerate(row) if x > 0]
@@ -46,7 +44,7 @@ def algo(W, nodes, colors, status, tab=0):
 					break
 			if flag == 1:
 				status_copy[current_node] = c
-				algo(W, nodes_copy, colors, status_copy, tab+1)
+				algo(W, nodes_copy, colors, status_copy)
 
 
 # ----------------------------------
@@ -73,8 +71,6 @@ chromatic = 0
 
 color_set = list(range(n_colors))
 
-# if n_colors > 6:
-# 	color_set = list(range(n_colors))
 
 # get edges
 for i in range(1,len(W)):
@@ -82,14 +78,14 @@ for i in range(1,len(W)):
 		if (W[i][j] > 0):
 			edges.append([i,j])
 
-print(f"edges: {edges}")
+print(f"edges: {edges}\n")
 print(f"nodes: {nodes}")
 
 print()
 for i in range(1,n_colors+1):
 	# global solution
 	solution = []
-	color_em(nodes, edges, W, i)
+	color_em(nodes, W, i)
 	lst.append(len(solution))
 	
 	if flag == 0:
@@ -112,18 +108,9 @@ g = nx.Graph()
 g.add_nodes_from(nodes)
 g.add_edges_from(edges)
 
-cmaps = mpl.colormaps()
-c_n = int(argv[2])
-# nx.draw(g, with_labels=True, node_color=pd.Series(solution[0][1:]), cmap=plt.cm.Set1, node_size=750)
-# nx.draw(g, with_labels=True, node_color=pd.Series(solution[0][1:]), cmap=mpl.colormaps['Set1'], node_size=750)
-nx.draw(g, with_labels=True, node_color=pd.Series(solution[0][1:]), cmap=cmaps[c_n], node_size=750)
+plt.figure()
+plt.title(f'Resultant Colored Graph')
+nx.draw(g, with_labels=True, node_color=pd.Series(solution[0][1:]), cmap=mpl.colormaps['Set1'], node_size=750)
+plt.savefig(f'graph_pic.png')
 plt.show()
-
-
-# 5
-# 0 1 2 3 4 5
-# 1 0 1 1 1 1
-# 2 1 0 1 1 1
-# 3 1 1 0 1 1
-# 4 1 1 1 0 1
-# 5 1 1 1 1 0
+plt.close()
