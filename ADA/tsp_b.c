@@ -91,11 +91,16 @@ int reduce(float arr[size][size])
 	return red;
 }
 
+struct neighbour
+{
+	int node, int cost;
+} neighbours[n_size];
+
 int delete(int neighbours[], int val)
 {
 	int i;
 	for (i=0; i<n_size; i++)
-		if (neighbours[i] == val)
+		if (neighbours[i].node == val)
 			break;
 	for (; i<n_size; i++)
 		neighbours[i] = neighbours[i+1];
@@ -131,12 +136,13 @@ int main()
 
 	printf("\nneighbours : ");
 	for (int i=0; i<n_size; i++)
-		printf("%d  ", neighbours[i]);
+		printf("%d  ", neighbours[i].node);
 
 
+	int cost;
 	for (int i=0; i<n_size; i++)
 	{
-		algo(neighbours[i], W, node, root_cost);
+		cost = algo(neighbours[i], W, node, root_cost);
 	}
 	
 	show(W, "W");
@@ -162,4 +168,5 @@ int algo(int branch, float mat[size][size], int node, int root_cost)
 
 	printf("\n\ncost(%d,%d) = %d", node, branch, total_cost);
 	show(temp, c);
+	return total_cost;
 }

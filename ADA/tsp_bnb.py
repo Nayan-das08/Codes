@@ -104,7 +104,7 @@ def algo(A,x,y,r):
 	a,b = reduce_2(temp,x,y)
 	if b > 0:
 		print(f'reduced ({x},{y})')
-	# 	show(a)
+		show(a)
 	print(f'reduction cost = {b}')
 	total_cost = r + A[x][y] + b
 	# print('\n-----------------------------------\n')
