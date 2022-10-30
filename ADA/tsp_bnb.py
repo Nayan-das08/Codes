@@ -92,20 +92,20 @@ def reduce_2 (A,x,y):
 	return temp,cost
 
 def algo(A,x,y,r):
-	# print(f'for ({x},{y})')
+	print(f'for ({x},{y})')
 
 	temp = copy.deepcopy(A)
 	for a in range(1,len(temp)):
 		temp[x][a] = temp[a][y] = np.Inf
 	temp[y][1] = np.Inf
 
-	# show(temp)
+	show(temp)
 	
 	a,b = reduce_2(temp,x,y)
-	# if b > 0:
-	# 	print(f'reduced ({x},{y})')
+	if b > 0:
+		print(f'reduced ({x},{y})')
 	# 	show(a)
-	# print(f'reduction cost = {b}')
+	print(f'reduction cost = {b}')
 	total_cost = r + A[x][y] + b
 	# print('\n-----------------------------------\n')
 	return a,total_cost
@@ -115,23 +115,23 @@ def algo(A,x,y,r):
 system('cls')
 z = np.Inf
 
-# A = [
-# 	[0,  1,  2,  3,  4,  5],
-# 	[1,  z, 20, 30, 10, 11],
-# 	[2, 15,  z, 16,  4,  2],
-# 	[3,  3,  5,  z,  2,  4],
-# 	[4, 19,  6, 18,  z,  3],
-# 	[5, 16,  4, 7,  16,  z]
-# ]
-
 A = [
 	[0,  1,  2,  3,  4,  5],
-	[1,  z,  7,  3, 12,  8],
-	[2,  3,  z,  6, 14,  9],
-	[3,  5,  8,  z,  6, 18],
-	[4,  9,  3,  5,  z, 11],
-	[5, 18, 14,  9,  8,  z]
+	[1,  z, 20, 30, 10, 11],
+	[2, 15,  z, 16,  4,  2],
+	[3,  3,  5,  z,  2,  4],
+	[4, 19,  6, 18,  z,  3],
+	[5, 16,  4, 7,  16,  z]
 ]
+
+# A = [
+# 	[0,  1,  2,  3,  4,  5],
+# 	[1,  z,  7,  3, 12,  8],
+# 	[2,  3,  z,  6, 14,  9],
+# 	[3,  5,  8,  z,  6, 18],
+# 	[4,  9,  3,  5,  z, 11],
+# 	[5, 18, 14,  9,  8,  z]
+# ]
 
 print('original matrix')
 show(A)
