@@ -4,12 +4,14 @@
 # include <stdlib.h>
 # include <math.h>
 # include <string.h>
-# define  z  INFINITY
-
-int n = 5+1;
-int size = 10;
-int n_size = 5;
-
+# define  z  		INFINITY
+# define  size 		10
+# define  n_nodes	5
+int n = n_nodes+1;
+// int size = 10;
+int n_size = n_nodes;
+float temp[size][size];
+	
 void show(float arr[size][size], char name[])
 {
 	char space[10] = "";
@@ -93,10 +95,10 @@ int reduce(float arr[size][size])
 
 struct neighbour
 {
-	int node, int cost;
-} neighbours[n_size];
+	int node, cost;
+} ;
 
-int delete(int neighbours[], int val)
+int delete(struct neighbour neighbours[], int val)
 {
 	int i;
 	for (i=0; i<n_size; i++)
@@ -108,11 +110,31 @@ int delete(int neighbours[], int val)
 	return val;
 }
 
-int algo(int branch, float W[size][size], int node, int root_cost);
+void algo(struct neighbour *branch, float mat[size][size], int node, int root_cost)
+{
+	char c[10];
+	int red_cost, total_cost;
+
+	memcpy(temp, mat, size*size*sizeof(float));
+	sprintf(c, "(%d,%d)",node,branch->node);
+
+	for (int i=1; i<n; i++)
+		temp[node][i] = temp[i][branch->node] = INFINITY;
+	temp[branch->node][1] = INFINITY;
+
+	red_cost = reduce(temp);
+	total_cost = root_cost + mat[node][branch->node] + red_cost;
+
+	printf("\n\ncost(%d,%d) = %d", node, branch->node, total_cost);
+	branch->cost = total_cost;
+	show(temp, c);
+	// return total_cost;
+}
 
 int main()
 {
-	int root_cost, node;
+	printf("TRAVELLING SALESPERSON PROBLEM \nUsing Branch-&-Bound");
+	int root_cost, root_node, node;
 	float W[10][10] = {
 		{0,  1,  2,  3,  4,  5},
 		{1,  z, 20, 30, 10, 11},
@@ -123,50 +145,76 @@ int main()
 		{5, 16,  4,  7, 16, z}
 	};
 
-	int *neighbours = (int *) calloc(n_size, sizeof(int));
+	int *path = (int *) calloc(n_nodes, sizeof(int));
+	struct neighbour *neighbours = (struct neighbour*) calloc(n_nodes, sizeof(struct neighbour));
 	for (int i=0; i<n_size; i++)
-		neighbours[i] = i+1;
+	{
+		neighbours[i].node = i+1;
+		neighbours[i].cost = -1;
+	}
 
 	root_cost = reduce(W);
-	
 	show(W, "W");
 	printf("root cost = %d", root_cost);
 
 	node = delete(neighbours, 1);
+	root_node = node;
+	path[0] = root_node;
 
 	printf("\nneighbours : ");
 	for (int i=0; i<n_size; i++)
 		printf("%d  ", neighbours[i].node);
 
+	printf("\n\n----------------------------------------------------\n");
 
-	int cost;
-	for (int i=0; i<n_size; i++)
+	float current_mat[10][10];
+	memcpy(current_mat, W, size*size*sizeof(float));
+	int k=1;
+	// graph traversal begins here
+	while (n_size > 0)
 	{
-		cost = algo(neighbours[i], W, node, root_cost);
+		printf("for node %d", node);
+		for (int i=0; i<n_size; i++)
+		{
+			algo(&neighbours[i], current_mat, node, root_cost);
+		}
+		
+		printf("\nneighbours (%d): \n", n_size);
+		for (int i=0; i<n_size; i++)
+			printf("  %d has cost = %d\n", neighbours[i].node, neighbours[i].cost);
+		int min_cost_pos = 0;
+		int min_cost_val = neighbours[min_cost_pos].cost;
+		for (int i=0; i<n_size; i++)
+			if (neighbours[i].cost < min_cost_val)
+			{
+				min_cost_pos = i;
+				min_cost_val = neighbours[min_cost_pos].cost;
+			}
+		printf("minimum cost = %d at node %d", min_cost_val, neighbours[min_cost_pos].node);
+		// once min cost branch is found
+			// obtain the (node,branch) matrix from scratch
+			// set current_mat to the (node,branch) matrix
+		memcpy(temp, current_mat, size*size*sizeof(float));
+		for (int i=1; i<n; i++)
+			temp[node][i] = temp[i][neighbours[min_cost_pos].node] = INFINITY;
+		temp[neighbours[min_cost_pos].node][1] = INFINITY;
+		reduce(temp);
+		memcpy(current_mat, temp, size*size*sizeof(float));
+			// remove that node from neighours[]
+			// change node var to current branch
+		node = delete(neighbours, neighbours[min_cost_pos].node);
+			// change root_cost var to new min_cost_val
+		root_cost = min_cost_val;
+			// add the chosen node to the path[]
+		path[k++] = node;
+		printf("\n\n----------------------------------------------------\n");
 	}
-	
-	show(W, "W");
+
+	printf("Final Path is :\n");
+	for (int i=0; i<n_nodes; i++)
+		printf("%d -> ", path[i]);
+	printf("%d\n", root_node);
 
 	return 0;
 }
 
-int algo(int branch, float mat[size][size], int node, int root_cost)
-{
-	float temp[size][size];
-	char c[10];
-	int red_cost, total_cost;
-
-	memcpy(temp, mat, size*size*sizeof(float));
-	sprintf(c, "(%d,%d)",node,branch);
-
-	for (int i=1; i<n; i++)
-		temp[node][i] = temp[i][branch] = INFINITY;
-	temp[branch][1] = INFINITY;
-
-	red_cost = reduce(temp);
-	total_cost = root_cost + mat[node][branch] + red_cost;
-
-	printf("\n\ncost(%d,%d) = %d", node, branch, total_cost);
-	show(temp, c);
-	return total_cost;
-}

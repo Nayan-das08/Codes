@@ -99,13 +99,14 @@ def algo(A,x,y,r):
 		temp[x][a] = temp[a][y] = np.Inf
 	temp[y][1] = np.Inf
 
-	show(temp)
+	# show(temp)
 	
 	a,b = reduce_2(temp,x,y)
-	if b > 0:
-		print(f'reduced ({x},{y})')
-		show(a)
-	print(f'reduction cost = {b}')
+	# if b > 0:
+	# 	print(f'reduced ({x},{y})')
+	# 	show(a)
+	show(a)
+	# print(f'reduction cost = {b}')
 	total_cost = r + A[x][y] + b
 	# print('\n-----------------------------------\n')
 	return a,total_cost
@@ -168,7 +169,7 @@ while len(neighbours) > 0:
 	r = min(cost_list)
 	curr_matrix = matrices[cost_list.index(min(cost_list))]
 	# print(f'root node cost = {r}')
-	print()
+	print('---------------------------------------')
 
 path.append(root)
 
