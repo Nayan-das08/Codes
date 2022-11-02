@@ -99,11 +99,11 @@ def algo(A,x,y,r):
 		temp[x][a] = temp[a][y] = np.Inf
 	temp[y][1] = np.Inf
 
-	# show(temp)
+	show(temp)
 	
 	a,b = reduce_2(temp,x,y)
-	# if b > 0:
-	# 	print(f'reduced ({x},{y})')
+	if b > 0:
+		print(f'reduced ({x},{y})')
 	# 	show(a)
 	show(a)
 	# print(f'reduction cost = {b}')
