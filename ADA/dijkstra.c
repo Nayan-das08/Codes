@@ -20,7 +20,7 @@ int min(float d[])
 
 void status(float d[])
 {
-	printf("\n\nd[i] : \n  ");
+	printf("d[i] : \n  ");
     for (int i=1; i<n; i++)
     	printf("%2d  ", i);
     printf("\n  ");
@@ -67,6 +67,16 @@ int main()
 		{6, 0, 0, 0, 0, 0, 0}
     };
 
+    // int W[][10] = {
+    //     {0,  1,  2,  3,  4,  5,  6},
+    //     {1,  0, 50, 45, 10,  0,  0}, 
+    //     {2,  0,  0, 10, 15,  0,  0}, 
+    //     {3,  0,  0,  0,  0, 30,  0}, 
+    //     {4, 10,  0,  0,  0, 15,  0}, 
+    //     {5,  0, 20, 35,  0,  0,  0}, 
+    //     {6,  0,  0,  0,  0,  3,  0}       
+    // };
+
     n = 6+1;
     struct edge *edges = (struct edge *) calloc((n*n), (sizeof(struct edge)));
 
@@ -94,23 +104,43 @@ int main()
     int source = 1;
     d[source] = 0;
 
+    printf("\n\n");
     status(d);
+    printf("--------------------------------\n\n");
 
-    int min_node;
+    int adj_wt;
     int current_node = source;
-    for (int i=1; i<2; i++)
+    int min_key, min_node, j;
+    for (int i=1; i<n; i++)
     {
     	printf("adj of %d : ", current_node);
-        min_node = 1;
-    	for (int j=1; j<n; j++)
+        min_key = INT_MAX;
+    	for (j=1; j<n; j++)
     	{
     		if (W[current_node][j] > 0)
             // adjacent nodes
             {
-                
-    			printf("%d  ", j);
+                if (d[current_node] + W[current_node][j] < d[j])
+                    d[j] = d[current_node] + W[current_node][j];
+                printf("%d(%.0f)  ", j, d[j]);
+                if (d[j] < min_key)
+                {
+                    min_key = d[j];
+                    min_node = j;
+                }
+             /*   adj_wt = W[current_node][j];
+    			printf("%d(%d)  ", j, adj_wt);
+                // choose node minimum weight
+                if (adj_wt < min_wt)
+                {
+                    min_wt = adj_wt;
+                    min_node = j;
+                }*/
             }
     	}
+        current_node = min_node;
+        printf("\nmin_node = %d\n", min_node);
+        status(d);
     	printf("\n");
     }
 
