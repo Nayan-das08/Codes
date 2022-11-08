@@ -2,32 +2,7 @@ import numpy as np
 from os import system
 import msvcrt
 
-# useless fns
-# def show_2(mat):
-# 	print()
-# 	for i in mat:
-# 		for j in i:
-# 			print(f"{j:2}", end=' ')
-# 		print()
-# 	print()
-
-# def get_m_2(n):
-# 	m = []
-
-# 	for i in range(n):
-# 		row = []
-# 		if i == 0:
-# 			row = [i for i in range(n)]
-# 		else:
-# 			row = [-1 for i in range(n+1-i)]
-# 		m.append(row)
-
-# 	for i in range(1,n):
-# 		m[i][0] = n-i
-
-# 	return m
-
-
+# return matrices of appropriate size
 def get_mat(n):
 	m = []
 	for i in range(n):
@@ -38,6 +13,7 @@ def get_mat(n):
 	
 	return m
 
+# display matrix 'm'
 def show(mat):
 	print()
 	for i in range(len(mat)):
@@ -59,6 +35,7 @@ def show(mat):
 				print(f"{mat[i][j]:7}", end=' ')
 		print()
 
+# display matrix 's'
 def show_s(mat):
 	print()
 	for i in range(len(mat)-1):
@@ -80,6 +57,7 @@ def show_s(mat):
 				print(f"{mat[i][j]:2}", end=' ')
 		print()	
 
+# display the optimal solution
 def print_optimal(s,i,j):
 	if i == j:
 		print(f'A{i}', end='')
@@ -89,6 +67,7 @@ def print_optimal(s,i,j):
 		print_optimal(s, s[i][j]+1, j)
 		print(' ) ', end='')
 
+# function to draw the table to display information
 def table(p):
 	print('+-----------+', end='')
 	for i in range(len(p)-1):
@@ -117,7 +96,8 @@ system('cls')
 print('\nMATRIX CHAIN MULTIPLICATION \nUSING DYNAMIC PROGRAMMING\n')
 
 # p = [30,35,15,5,10,20,25]
-p = [5,10,3,12,5,50,6]
+# p = [5,10,3,12,5,50,6]
+p = [5,4,6,2,7]
 
 table(p)
 
@@ -147,7 +127,5 @@ show_s(s)
 
 
 print('\n\nsolution :-')
-print_optimal(s,1,6)
+print_optimal(s,1,n-1)
 print('\n')
-
-# msvcrt.getch()
