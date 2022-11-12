@@ -2,3 +2,4 @@
 *.code-workspace 
 *.sublime-workspace 
 python\deep\
+*.out
