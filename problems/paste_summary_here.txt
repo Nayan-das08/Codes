@@ -1,0 +1,4 @@
+- IPv6 does not use ARP, it uses the ND protocol to resolve MAC addresses
+- ND provides address resolution, router discovery, and redirection services for IPv6 using ICMPv6
+- ICMPv6 ND uses five ICMPv6 messages to perform these services: neighbor solicitation, neighbor advertisement, router solicitation, router advertisement, and redirect
+- Much like ARP for IPv4, IPv6 devices use IPv6 ND to resolve the MAC address of a device to a known IPv6 address

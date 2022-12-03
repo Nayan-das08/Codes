@@ -3,3 +3,4 @@
 *.sublime-workspace 
 python\deep\
 *.out
+python/ai_mL/project/turns.csv 
