@@ -1,7 +1,9 @@
-function setup() {
-  createCanvas(750, 563);
+function setup() 
+{
+    createCanvas(750, 563);
 }
 
-function draw() {
+function draw() 
+{
 
 }
