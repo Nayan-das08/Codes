@@ -4,10 +4,12 @@
 
 int check(char c)
 {
+	if (c >= 40 || c <= 41)
+		return 0;
     if (c >= 48 && c <= 57)
         return 1;
     else if (c == '+' || c == '-' || c == '*' || c ==  '/')
-        return 0;
+        return 2;
     else
         return -1;
 }
@@ -24,7 +26,7 @@ int separate(char infix[], char new[][10])
         {
             strncat(temp, &infix[i], 1);      
         }
-        else if (infix[i] == '+' || infix[i] == '-' || infix[i] == '*' || infix[i] ==  '/')
+        else //if (infix[i] == '+' || infix[i] == '-' || infix[i] == '*' || infix[i] ==  '/')
         {
             strcpy(new[count], temp);
             count++;
@@ -38,10 +40,10 @@ int separate(char infix[], char new[][10])
     strcpy(new[count], temp);
     count++;
     strcpy(new[count], ")");
-    printf("\n\n");
+    // printf("\n\n");
     for (int i=0; i<=count; i++)
     {
-        printf("%s\n", new[i]);
+        // printf("%s ", new[i]);
     }
     return count;
 }
@@ -61,36 +63,53 @@ int precedence(char c)
 
 void convert(char infix[][10], int count)
 {
-    int top=0;
-    char stack[10][5], a, b;
+    int top=-1;
+    char stack[10][5], output[20][10], j=0, a, b;
     for (int i=0; i<=count; i++)
     {
         if (strcmp(infix[i],"(") == 0) 
-            strcpy(stack[top],infix[i]);
+        {
+            // push
+            printf("( read\n");
+            strcpy(stack[++top],infix[i]);
+        }
 
         // numeric
         else if (check(infix[i][0]) == 1)
-            printf("%s ", infix[i]);
+        {
+            printf("%s \n", infix[i]);
+        }
         
         // operator
-        else if (check(infix[i][0]) == 0)
+        else if (check(infix[i][0]) == 2)
         {
-            if (check(stack[top][0]) == 0)
+        	printf("num read");
+
+        	// stack[top] is an operator as well
+            if (check(stack[top][0]) == 2)
             {
                 a = infix[i][0];
                 b = stack[top][0];
-                // top has higher precedence
+                // stack[top] has higher precedence
                 if (precedence(b) >= precedence(a))
                 {
                     // pop
-                    printf("%s ", stack[top]);
-                    top--;
+                    printf("%s \n", stack[top]);
+                    // strcpy(output[j++], stack[top]);
+ 		        	// strcpy(output[j++], (char [2]) {' ', '\0'});
+                    // top--;
                     // push
                     strcpy(stack[top],infix[i]);
                 }
-                else 
-                    strcpy(stack[top],infix[i]);
+                else
+	            {
+	                strcpy(stack[++top],infix[i]);
+	            }
             }
+            else
+            {
+                strcpy(stack[++top],infix[i]);
+            } 
         }
 
         else if (strcmp(infix[i],")") == 0)
@@ -98,17 +117,22 @@ void convert(char infix[][10], int count)
             while (strcmp(stack[top], "(") != 0)
             {
                 // pop
-                printf("%s ", stack[top]);
-                top--;
+                printf("%s \n", stack[top--]);
             }
             
         }
 
-        printf("%s \t", infix[i]);
-        //for (int k=0; k<=top; k++)
-          //  printf("%s", stack[top]);
-        printf("\n"); 
+        // printf("%s \t", infix[i]);
+        // for (int k=0; k<=top; k++)
+        //    printf("%s", stack[top]);
+       	// printf("\t");
+        // for (int k=0; k<j; j++)
+        //    printf("%s", output[k]);
+        // printf("\n"); 
     }
+    // for (int k=0; k<=count; k++)
+    //     printf("%s\n", infix[k]);
+
 }
 
 int main()
@@ -121,8 +145,12 @@ int main()
     printf("infix = %s\n", infix);
     
     count = separate(infix,infix_sep);
+    printf("\n");
     convert(infix_sep, count);
 
-    printf("\n");
+    // for (int k=0; k<=count; k++)
+    //     printf("%s\n", infix_sep[k]);
+    
+    // printf("\n");
     return 0;
 }
